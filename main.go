@@ -3,23 +3,41 @@ package main
 import(
 	// "db"
 	// "fmt"
-	"log"
-	"net/http"
+	// "log"
+	// "net/http"
+    "github.com/zenazn/goji"
+    
+	"flag"
+
 	"controller/funcs"
+
 )
+
+const Port string =":8080"
 
 func main() {
 	// var mux = http.NewServeMux()
-	Port := ":8080"
-	http.HandleFunc("/", SayHello)
-	http.HandleFunc("/registration", funcs.Registration)
-	err := http.ListenAndServe(Port, nil)
-	if err != nil {
-		log.Println("Server connection error", err)
-	}
+	startserver := flag.Bool("startserver", false, "starts the server")
+	flag.Parse()
 
+	if *startserver{
+		
+		LoadRoutes()
+		StartServer()
+	}
 }
 
-func SayHello(w http.ResponseWriter, r *http.Request){
-	w.Write([]byte("Hello"))
+func StartServer(){
+
+	flag.Set("bind", Port)
+	goji.Serve()
+}
+
+func LoadRoutes(){
+	// mux := goji.NewMux()
+	// mux := web.New()
+	
+	goji.Post("/registration", funcs.Registration)
+	goji.Post("/login", funcs.Login)
+	
 }

@@ -2,21 +2,21 @@ package db
 
 import (
 
-	// "labix.org/v2/mgo"
-	// "fmt"
-	mgo "gopkg.in/mgo.v2"
 	"time"
 	"log"
 	// "reflect"
+
+	mgo "gopkg.in/mgo.v2"
+	
 )
 
 type Ab struct{
 	A string `json:"a"`
 }
 
-func ConnPool () *mgo.Session{
+func ConnPool () *mgo.Session {
 	mongoDBDialInfo := &mgo.DialInfo{
-		Addrs:    []string{"localhost"},
+		Addrs:    []string{"localhost:27017"},
 		Timeout:  60 * time.Second,
 		Database: "test",
 		Username: "",

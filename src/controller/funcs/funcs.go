@@ -8,9 +8,11 @@ import (
 	"structs"
 	"db"
 	"helpers"
+
+	"github.com/zenazn/goji/web"
 )
 
-func Registration(w http.ResponseWriter, r *http.Request){
+func Registration(c web.C, w http.ResponseWriter, r *http.Request){
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		fmt.Println("Error in reading registration details ->", err)
@@ -34,4 +36,33 @@ func Registration(w http.ResponseWriter, r *http.Request){
 		fmt.Println("Inserted")
 	}
 }
+
+func Login(c web.C, w http.ResponseWriter, r *http.Request){
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		fmt.Println("error reading login body->", err)
+	}
+
+	var l structs.Login
+	var res = make(map[string]string)
+
+	err = json.Unmarshal(body, &l)
+	if err != nil {
+		fmt.Println("error unmarshaling login body", err)
+	}
+
+	Conn := db.DBops(helpers.Database, helpers.UsersCollection)
+	err = Conn.Find(&structs.Login{
+		Email : l.Email,
+	}).One(&res)
+	fmt.Println("res--->", res)
+	
+	if err != nil {
+		fmt.Println("error fetching data ->", err)
+	}else{
+		fmt.Println("Fetched")
+	}
+}
+
+
 
