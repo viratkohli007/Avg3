@@ -12,7 +12,14 @@ import (
 	"github.com/zenazn/goji/web"
 )
 
+// func setupResponse(w http.ResponseWriter, req *http.Request) {
+// 	(w).Header().Set("Access-Control-Allow-Origin", "*")
+//     (w).Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+//     (w).Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+// }
+
 func Registration(c web.C, w http.ResponseWriter, r *http.Request){
+	// setupResponse(w,r)
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		fmt.Println("Error in reading registration details ->", err)
