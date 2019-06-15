@@ -8,7 +8,7 @@ type UserReg struct {
 
 	FirstName string `json:"firstname"`
 	LastName string `json:"lastname"`
-	Emain string `json:"email"`
+	Email string `json:"email"`
 	Password string `json:"password"`
 	// Img string `json:"image"`
 	// ChatHistory []string `json:"chat_history"`

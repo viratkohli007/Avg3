@@ -23,7 +23,7 @@ func Registration(c web.C, w http.ResponseWriter, r *http.Request){
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		fmt.Println("Error in reading registration details ->", err)
-	} 
+	}
 	var reg structs.UserReg
 
 	err = json.Unmarshal(body, &reg)
@@ -33,8 +33,8 @@ func Registration(c web.C, w http.ResponseWriter, r *http.Request){
 	Conn := db.DBops(helpers.Database, helpers.UsersCollection)
 	err = Conn.Insert(&structs.UserReg{
 		FirstName : reg.FirstName,
-		LastName  : reg.LastName, 
-		Emain     : reg.Emain,
+		LastName  : reg.LastName,
+		Email     : reg.Email,
 		Password  : reg.Password,
 	})
 	if err != nil {
@@ -63,7 +63,7 @@ func Login(c web.C, w http.ResponseWriter, r *http.Request){
 		Email : l.Email,
 	}).One(&res)
 	fmt.Println("res--->", res)
-	
+
 	if err != nil {
 		fmt.Println("error fetching data ->", err)
 	}else{
