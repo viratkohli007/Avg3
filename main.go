@@ -6,7 +6,7 @@ import(
 	// "log"
 	// "net/http"
     "github.com/zenazn/goji"
-    
+
 	"flag"
 
 	"controller/funcs"
@@ -21,7 +21,7 @@ func main() {
 	flag.Parse()
 
 	if *startserver{
-		
+
 		LoadRoutes()
 		StartServer()
 	}
@@ -36,8 +36,8 @@ func StartServer(){
 func LoadRoutes(){
 	// mux := goji.NewMux()
 	// mux := web.New()
-	
+
 	goji.Post("/registration", funcs.Registration)
 	goji.Post("/login", funcs.Login)
-	
+
 }

@@ -7,7 +7,7 @@ import (
 	// "reflect"
 
 	mgo "gopkg.in/mgo.v2"
-	
+
 )
 
 type Ab struct{
@@ -17,12 +17,12 @@ type Ab struct{
 func ConnPool () *mgo.Session {
 	mongoDBDialInfo := &mgo.DialInfo{
 		Addrs:    []string{"localhost:27017"},
-		Timeout:  60 * time.Second,
+		Timeout:  1 * time.Hour,
 		Database: "test",
 		Username: "",
 		Password: "",
 	}
-	
+
 	// Create a session which maintains a pool of socket connections
 	// to our MongoDB.
 	mongoSession, err := mgo.DialWithInfo(mongoDBDialInfo)
@@ -37,18 +37,20 @@ func ConnPool () *mgo.Session {
 
 var Pool = ConnPool()
 
-func DBops(db string, collection string) *mgo.Collection{
+func DBops(db , collection string) *mgo.Collection{
 
 	var Connection = Pool.DB(db).C(collection)
 	// log.Println("type>>>", reflect.TypeOf(Conn))
-	//----------------Query Demo----------------------------
+	//----------------Insert Query Demo----------------------------
 	// type x Ab
 	// err := Connection.Insert(x{"Inserted"})
-	// if err != nil{
+	// if err != nil{	
 	// 	log.Println("error in insertion", err)
 	// }else{
 	// 	log.Println("Inserted")
 	// }
+	//---------Find Query-------------------
+	// err := c.Find(query).One(&result)
 	return Connection
 }
 

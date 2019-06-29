@@ -1,0 +1,6 @@
+main2.go
+pkg/
+src/github.com/
+src/go.mongodb.org/
+src/goji.io/
+src/gopkg.in/

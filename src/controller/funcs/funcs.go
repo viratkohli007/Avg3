@@ -10,6 +10,7 @@ import (
 	"helpers"
 
 	"github.com/zenazn/goji/web"
+	bson "gopkg.in/mgo.v2/bson"
 )
 
 // func setupResponse(w http.ResponseWriter, req *http.Request) {
@@ -51,7 +52,7 @@ func Login(c web.C, w http.ResponseWriter, r *http.Request){
 	}
 
 	var l structs.Login
-	var res = make(map[string]string)
+	var res structs.Login
 
 	err = json.Unmarshal(body, &l)
 	if err != nil {
@@ -59,15 +60,13 @@ func Login(c web.C, w http.ResponseWriter, r *http.Request){
 	}
 
 	Conn := db.DBops(helpers.Database, helpers.UsersCollection)
-	err = Conn.Find(&structs.Login{
-		Email : l.Email,
-	}).One(&res)
+	err = Conn.Find(bson.M{"email": l.Email}).One(&res)
 	fmt.Println("res--->", res)
 
-	if err != nil {
-		fmt.Println("error fetching data ->", err)
+	if l.Password == res.Password {
+		fmt.Println("password matched")
 	}else{
-		fmt.Println("Fetched")
+		fmt.Println("password doesnt match")
 	}
 }
 
